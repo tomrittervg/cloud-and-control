@@ -11,6 +11,15 @@
       </cpu_limit>
     </project>
     <app>
+      <app_name>logparser</app_name>
+      <total_limit>
+        <jobs>16</jobs>
+      </total_limit>
+      <cpu_limit>
+        <jobs>1</jobs>
+      </cpu_limit>
+    </app>
+    <app>
       <app_name>hashcat</app_name>
       <total_limit>
         <jobs>16</jobs>

@@ -1,0 +1,147 @@
+--Hits & Bandwidth by URL
+	SELECT Request, COUNT(*) as hits, SUM(BytesSent) as bandwidth, DIV(SUM(BytesSent), COUNT(*)) as itemSize FROM * GROUP BY Request ORDER BY bandwidth DESC
+--Hits & Bandwidth by User-Agent
+    SELECT User-Agent, COUNT(*) as hits, SUM(BytesSent) as bandwidth, DIV(SUM(BytesSent), COUNT(*)) as itemSize FROM * GROUP BY User-Agent ORDER BY bandwidth DESC
+--Hits & Bandwidth by Hour
+    SELECT TO_TIME(QUANTIZE(DateTime, 3600)) as [hour], COUNT(*) as hits, SUM(BytesSent) as bandwidth, DIV(SUM(BytesSent), COUNT(*)) as avgSize FROM * GROUP BY TO_TIME(QUANTIZE(DateTime, 3600)) ORDER BY bandwidth DESC
+--Hits & Bandwidth by Hour of Week
+    
+--Hits & Bandwidth Bucketed by Hour
+    SELECT QUANTIZE(DateTime, 3600) as bucket, COUNT(*) as hits, SUM(BytesSent) as bandwidth, DIV(SUM(BytesSent), COUNT(*)) as avgSize FROM * GROUP BY QUANTIZE(DateTime, 3600) ORDER BY bandwidth DESC
+
+--User-Agent by Hour of Week
+    
+
+    
+--Status Code Breakdown
+    SELECT StatusCode, COUNT(*) as hits, MUL(PROPCOUNT(*), 100) as percentage from * GROUP BY StatusCode ORDER BY hits DESC
+--StatusCode by User-Agent vs Standard Distribution
+
+
+--403s
+    SELECT Request, COUNT(*) AS hits, MUL(PROPCOUNT(*), 100) as percentage FROM * WHERE StatusCode = 403 GROUP BY Request HAVING COUNT(*) > 5 ORDER BY hits DESC
+--403s by Hour
+    SELECT TO_TIME(QUANTIZE(DATETIME, 3600)) as [hour], COUNT(*) AS hits, MUL(PROPCOUNT(*), 100) as percentage FROM * WHERE StatusCode = 403 GROUP BY TO_TIME(QUANTIZE(DATETIME, 3600)) ORDER BY hits DESC
+--403s Bucketed by Hour
+    SELECT QUANTIZE(DateTime, 3600) as bucket, COUNT(*) AS hits, MUL(PROPCOUNT(*), 100) as percentage FROM * WHERE StatusCode = 403 GROUP BY QUANTIZE(DateTime, 3600) ORDER BY hits DESC
+
+--404s
+    SELECT Request, COUNT(*) AS hits, MUL(PROPCOUNT(*), 100) as percentage FROM * WHERE StatusCode = 404 GROUP BY Request HAVING COUNT(*) > 5 ORDER BY hits DESC
+--404s by Hour
+    
+--404s Bucketed by Hour
+    SELECT QUANTIZE(DateTime, 3600) as bucket, COUNT(*) AS hits, MUL(PROPCOUNT(*), 100) as percentage FROM * WHERE StatusCode = 404 GROUP BY QUANTIZE(DateTime, 3600) ORDER BY hits DESC
+
+--302s
+    SELECT Request, COUNT(*) AS hits, MUL(PROPCOUNT(*), 100) as percentage FROM * WHERE StatusCode = 302 GROUP BY Request HAVING COUNT(*) > 5 ORDER BY hits DESC
+
+--Other (Errors)
+    SELECT StatusCode, Request, COUNT(*) AS hits, MUL(PROPCOUNT(*), 100) as percentage FROM * WHERE StatusCode NOT IN (200; 206; 301; 302; 304; 403; 404; 503) GROUP BY StatusCode, Request HAVING COUNT(*) > 5 ORDER BY StatusCode, hits DESC
+--Other (Errors) by Hour
+    
+--Other (Errors) Bucketed by Hour
+    
+    
+
+--HTTP Protocol
+--POSTS instead of GETS or the reverse
+    
+    
+--Top Bandwidth/Hits by Hour by IP/User-Agent
+
+--StatusCode by URL
+--StatusCode by User-Agent
+
+--StatusCode as a Percentage by URL
+--StatusCode as a Percentage by User-Agent
+
+--Error Codes by Hour/User-Agent/IP
+--Large Percentage of hits on a url vs others from an IP
+--Status Code Percentage by IP/User-Agent/Hour
+
+--Status Code 200 Accessed Less than N times. 
+
+--Urls with attack string patterns in them, by IP/User-Agent/Hour
+
+--Status Code Average and Standard Deviation
+    select 
+         avg(P200) as P200Avg
+        ,SQRROOT ( SUB ( DIV (TO_REAL(SUM(SQR(P200))), COUNT(*)) , SQR(P200Avg) ) ) AS P200StDev 
+        ,avg(P206) as P206Avg
+        ,SQRROOT ( SUB ( DIV (TO_REAL(SUM(SQR(P206))), COUNT(*)) , SQR(P206Avg) ) ) AS P206StDev 
+        ,avg(P301) as P301Avg
+        ,SQRROOT ( SUB ( DIV (TO_REAL(SUM(SQR(P301))), COUNT(*)) , SQR(P301Avg) ) ) AS P301StDev 
+        ,avg(P302) as P302Avg
+        ,SQRROOT ( SUB ( DIV (TO_REAL(SUM(SQR(P302))), COUNT(*)) , SQR(P302Avg) ) ) AS P302StDev 
+        ,avg(P304) as P304Avg
+        ,SQRROOT ( SUB ( DIV (TO_REAL(SUM(SQR(P304))), COUNT(*)) , SQR(P304Avg) ) ) AS P304StDev 
+        ,avg(P400) as P400Avg
+        ,SQRROOT ( SUB ( DIV (TO_REAL(SUM(SQR(P400))), COUNT(*)) , SQR(P400Avg) ) ) AS P400StDev 
+        ,avg(P403) as P403Avg
+        ,SQRROOT ( SUB ( DIV (TO_REAL(SUM(SQR(P403))), COUNT(*)) , SQR(P403Avg) ) ) AS P403StDev 
+        ,avg(P404) as P404Avg
+        ,SQRROOT ( SUB ( DIV (TO_REAL(SUM(SQR(P404))), COUNT(*)) , SQR(P404Avg) ) ) AS P404StDev 
+        ,avg(P405) as P405Avg
+        ,SQRROOT ( SUB ( DIV (TO_REAL(SUM(SQR(P405))), COUNT(*)) , SQR(P405Avg) ) ) AS P405StDev 
+        ,avg(P408) as P408Avg
+        ,SQRROOT ( SUB ( DIV (TO_REAL(SUM(SQR(P408))), COUNT(*)) , SQR(P408Avg) ) ) AS P408StDev 
+        ,avg(P413) as P413Avg
+        ,SQRROOT ( SUB ( DIV (TO_REAL(SUM(SQR(P413))), COUNT(*)) , SQR(P413Avg) ) ) AS P413StDev 
+        ,avg(P416) as P416Avg
+        ,SQRROOT ( SUB ( DIV (TO_REAL(SUM(SQR(P416))), COUNT(*)) , SQR(P416Avg) ) ) AS P416StDev 
+        ,avg(P499) as P499Avg
+        ,SQRROOT ( SUB ( DIV (TO_REAL(SUM(SQR(P499))), COUNT(*)) , SQR(P499Avg) ) ) AS P499StDev 
+        ,avg(P500) as P500Avg
+        ,SQRROOT ( SUB ( DIV (TO_REAL(SUM(SQR(P500))), COUNT(*)) , SQR(P500Avg) ) ) AS P500StDev 
+        ,avg(P502) as P502Avg
+        ,SQRROOT ( SUB ( DIV (TO_REAL(SUM(SQR(P502))), COUNT(*)) , SQR(P502Avg) ) ) AS P502StDev 
+        ,avg(P503) as P503Avg
+        ,SQRROOT ( SUB ( DIV (TO_REAL(SUM(SQR(P503))), COUNT(*)) , SQR(P503Avg) ) ) AS P503StDev 
+        ,avg(P504) as P504Avg
+        ,SQRROOT ( SUB ( DIV (TO_REAL(SUM(SQR(P504))), COUNT(*)) , SQR(P504Avg) ) ) AS P504StDev 
+    from *
+
+--Status Code Percentages by IP
+    select 
+        RemoteHostName
+        ,sum(case StatusCode when 200 then 1 else 0 end) as C200s
+        ,MUL(div(TO_REAL(sum(case StatusCode when 200 then 1 else 0 end)), TO_REAL(count(*))), 100) as P200
+        ,sum(case StatusCode when 206 then 1 else 0 end) as C206s
+        ,MUL(div(TO_REAL(sum(case StatusCode when 206 then 1 else 0 end)), TO_REAL(count(*))), 100) as P206
+        ,sum(case StatusCode when 301 then 1 else 0 end) as C301s
+        ,MUL(div(TO_REAL(sum(case StatusCode when 301 then 1 else 0 end)), TO_REAL(count(*))), 100) as P301
+        ,sum(case StatusCode when 302 then 1 else 0 end) as C302s
+        ,MUL(div(TO_REAL(sum(case StatusCode when 302 then 1 else 0 end)), TO_REAL(count(*))), 100) as P302
+        ,sum(case StatusCode when 304 then 1 else 0 end) as C304s
+        ,MUL(div(TO_REAL(sum(case StatusCode when 304 then 1 else 0 end)), TO_REAL(count(*))), 100) as P304
+        ,sum(case StatusCode when 400 then 1 else 0 end) as C400s
+        ,MUL(div(TO_REAL(sum(case StatusCode when 400 then 1 else 0 end)), TO_REAL(count(*))), 100) as P400
+        ,sum(case StatusCode when 403 then 1 else 0 end) as C403s
+        ,MUL(div(TO_REAL(sum(case StatusCode when 403 then 1 else 0 end)), TO_REAL(count(*))), 100) as P403
+        ,sum(case StatusCode when 404 then 1 else 0 end) as C404s
+        ,MUL(div(TO_REAL(sum(case StatusCode when 404 then 1 else 0 end)), TO_REAL(count(*))), 100) as P404
+        ,sum(case StatusCode when 405 then 1 else 0 end) as C405s
+        ,MUL(div(TO_REAL(sum(case StatusCode when 405 then 1 else 0 end)), TO_REAL(count(*))), 100) as P405
+        ,sum(case StatusCode when 408 then 1 else 0 end) as C408s
+        ,MUL(div(TO_REAL(sum(case StatusCode when 408 then 1 else 0 end)), TO_REAL(count(*))), 100) as P408
+        ,sum(case StatusCode when 413 then 1 else 0 end) as C413s
+        ,MUL(div(TO_REAL(sum(case StatusCode when 413 then 1 else 0 end)), TO_REAL(count(*))), 100) as P413
+        ,sum(case StatusCode when 416 then 1 else 0 end) as C416s
+        ,MUL(div(TO_REAL(sum(case StatusCode when 416 then 1 else 0 end)), TO_REAL(count(*))), 100) as P416
+        ,sum(case StatusCode when 499 then 1 else 0 end) as C499s
+        ,MUL(div(TO_REAL(sum(case StatusCode when 499 then 1 else 0 end)), TO_REAL(count(*))), 100) as P499
+        ,sum(case StatusCode when 500 then 1 else 0 end) as C500s
+        ,MUL(div(TO_REAL(sum(case StatusCode when 500 then 1 else 0 end)), TO_REAL(count(*))), 100) as P500
+        ,sum(case StatusCode when 502 then 1 else 0 end) as C502s
+        ,MUL(div(TO_REAL(sum(case StatusCode when 502 then 1 else 0 end)), TO_REAL(count(*))), 100) as P502
+        ,sum(case StatusCode when 503 then 1 else 0 end) as C503s
+        ,MUL(div(TO_REAL(sum(case StatusCode when 503 then 1 else 0 end)), TO_REAL(count(*))), 100) as P503
+        ,sum(case StatusCode when 504 then 1 else 0 end) as C504s
+        ,MUL(div(TO_REAL(sum(case StatusCode when 504 then 1 else 0 end)), TO_REAL(count(*))), 100) as P504
+        ,count(*) as NumRequests
+    from *
+    group by RemoteHostName
+
+
+--Find strange patterns, like IPs that've generated more than the normal # of 206's
+    select * from statuscode-percent-by-ip.csv where P206 > 8.677642 and NumRequests > 10

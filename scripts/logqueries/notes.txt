@@ -1,0 +1,31 @@
+LogParser will exit with Exit Code 1 if there are non-parsable lines in your log files.
+ - you need to either edit wrapper.exe or remove the offending log file lines.
+ - this includes blank lines (e.g. at the end)
+ - for editing 100-meg or larger files, I can recommend the 010 editor (stack exchange question)
+
+NCSA Fields:
+
+LogFilename (S)         
+UserName (S)       -      
+BytesSent (I)            
+LogRow (I)  
+DateTime (T)
+Referer (S) 
+RemoteHostName (S) - ip address
+Request (S)        GET / HTTP/1.1
+User-Agent (S)     
+RemoteLogName (S) -
+StatusCode (I)
+Cookie (S) -
+
+It's pretty tricky figuring out the correct escaping needed on the unix command line to create work for logparser.  I did it manually, and it would look like this:
+
+    bin/create_work --appname logparser --wu_name statuscodes --wu_template templates/logparser_wu.xml --result_template templates/logparser_result.xml --rsc_fpops_est 1156799999998800 --command_line "\'\"SELECT StatusCode, COUNT(*) as hits, MUL(PROPCOUNT(*), 100) as percentage from C:\\\loganalysis\\\* GROUP BY StatusCode ORDER BY hits DESC\"\'"
+ 
+Something rather annoying is moving the hundreds of gigs of logfiles around.
+Theorhetically BOINC could distribute them, but downloading 60GB (or more) of 
+logfiles serially over HTTP isn't a fun time. 
+Instead, I cheated and preloaded them on machines. To automate it, I'd make an 
+instance that had them on the root drive, or some fancy script that created an 
+instance and a volume, attached it, and attached the source drive, copying from
+the source to the new volume, then detaching the source and repeating.

@@ -21,7 +21,7 @@ repeatRates.py
 wordlistOverlapMatrix.py
 	This will calculate the overlap percentage pairwise of a directory of 
 	wordlists.
-	You're going to want to read this (it's short) before reading it.
+	You're going to want to read this (it's short) before running it.
 
 genPotStats.py
 	This was an attempt to parse out how many cracks could be attributed to 

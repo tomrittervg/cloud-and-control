@@ -21,6 +21,8 @@ lrwxrwxrwx 1 tom  apache hashcat_assimilator -> sample_assimilator
 lrwxrwxrwx 1 tom  apache hashcat_validator -> sample_bitwise_validator
 lrwxrwxrwx 1 tom  apache john_assimilator -> sample_assimilator
 lrwxrwxrwx 1 tom  apache john_validator -> sample_bitwise_validator
+lrwxrwxrwx 1 tom  apache logparser_assimilator -> sample_assimilator
+lrwxrwxrwx 1 tom  apache logparser_validator -> sample_bitwise_validator
 lrwxrwxrwx 1 tom  apache msieve_assimilator -> sample_assimilator
 lrwxrwxrwx 1 tom  apache msieve_validator -> sample_bitwise_validator
 -rwxr-xr-x 1 tom  apache sample_assimilator

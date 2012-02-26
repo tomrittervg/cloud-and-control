@@ -37,10 +37,14 @@ apps/
 	hashcat-7zwordlist/
 	john/
 	msieve/
+    logparser/
 	
 	These are the individual application folders.  The actual applications are 
 	not present, but merely stubs so you can see the naming.
 	
+    I included the windows wrappers for logparser because they're kind of a 
+    pain to build.  I downloaded them from the BOINC site some time ago.
+    
 	The "7zwordlist" versions indicate that the wordlist is actually a 
 	compressed file that must be compressed prior to running.  Some wordlists
 	I used were very large.

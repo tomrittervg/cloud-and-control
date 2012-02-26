@@ -1,0 +1,14 @@
+notes.txt
+    General useful things to review ifyou want to use BOINC with logparser
+
+queries.txt
+    I was thinking up interesting queries to run. Here's a list of them,
+    although not all of them have actual SQL queries.
+
+logparser grammar.txt
+    It's *almost* SQL, but not exactly.  This is the psuedo-BNF grammar and 
+    also lists all the functions. I think there's a way to have the program 
+    output this too.
+    
+benchmarking.gnumeric
+    My benchmarks for comparing a simple GROUP BY across different instances.
