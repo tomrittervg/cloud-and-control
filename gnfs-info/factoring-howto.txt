@@ -6,7 +6,7 @@ I mean you could try of course, but your Alt+Tabbing would have to be mighty str
 
 Likewise, the slides just brush over the math very briefly and don't go into much detail.  (This was afterall a
 spoken presentation.)  The slides in the main directory may shed a little more light on the subject and BOINC:
-  https://github.com/GDSSecurity/cloud-and-control/blob/master/Cloud & Control - notes.txt
+  https://github.com/tomrittervg/cloud-and-control/blob/master/Cloud & Control - notes.txt
 
 While there are the perl and python drivers that try to make it 'easy' to do,
 I find it more straightforward to compile and run the tools myself.
@@ -66,3 +66,9 @@ I find it more straightforward to compile and run the tools myself.
 
 9) Use your primes.  You may be interested in this set of scripts:
    https://github.com/tomrittervg/prime2pem
+
+
+
+Update:
+For factoring >512 bit, you may want to investigate CADO-NFS, which was used to factor RSA-704
+	http://cado-nfs.gforge.inria.fr/
